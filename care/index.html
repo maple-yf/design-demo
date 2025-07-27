@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>就医记录管理</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 页面头部 -->
+    <header class="header">
+        <div class="user-info">
+            <img src="https://ui-avatars.com/api/?name=用户&size=40&background=0D8ABC&color=fff&rounded=true" alt="用户头像" class="avatar">
+            <span class="username">用户名</span>
+        </div>
+        <button class="settings-btn">设置</button>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <!-- 新增记录按钮 -->
+        <div class="add-record-container">
+            <button class="add-record-btn">+ 新增记录</button>
+        </div>
+
+        <!-- 就诊信息 -->
+        <section class="statistics">
+            <h2>就诊信息</h2>
+            <div class="stats-container">
+                <div class="stat-card large upcoming">
+                    <div class="recent-visit">
+                        <div class="recent-title">即将就诊</div>
+                        <div class="recent-hospital">北京大学第一医院</div>
+                        <div class="recent-department">神经内科</div>
+                        <div class="recent-date">2025-07-28</div>
+                    </div>
+                </div>
+                <div class="stat-card large">
+                    <div class="recent-visit">
+                        <div class="recent-title">最近就诊</div>
+                        <div class="recent-hospital">北京协和医院</div>
+                        <div class="recent-department">心血管内科</div>
+                        <div class="recent-date">2025-07-20</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 状态筛选 -->
+        <section class="status-filter">
+            <h2>预约状态</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-status="all">全部</button>
+                <button class="filter-btn" data-status="pending">预约中</button>
+                <button class="filter-btn" data-status="completed">已就诊</button>
+            </div>
+        </section>
+
+        <!-- 就医记录列表 -->
+        <section class="records">
+            <h2>就医记录</h2>
+            <div class="records-list">
+                <!-- 记录项示例 -->
+                <div class="record-item" data-status="completed">
+                    <div class="record-header">
+                        <div class="hospital">北京协和医院</div>
+                        <div class="status completed">已就诊</div>
+                    </div>
+                    <div class="record-details">
+                        <div class="detail-row">
+                            <span class="label">科室:</span>
+                            <span class="value">心血管内科</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">医生:</span>
+                            <span class="value">张医生</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">时间:</span>
+                            <span class="value">2025-07-20 09:30</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">诊断:</span>
+                            <span class="value">高血压</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="record-item" data-status="pending">
+                    <div class="record-header">
+                        <div class="hospital">北京大学第一医院</div>
+                        <div class="status pending">预约中</div>
+                    </div>
+                    <div class="record-details">
+                        <div class="detail-row">
+                            <span class="label">科室:</span>
+                            <span class="value">神经内科</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">医生:</span>
+                            <span class="value">李医生</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">时间:</span>
+                            <span class="value">2025-07-28 14:00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">诊断:</span>
+                            <span class="value">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 新增记录模态框 -->
+    <div class="modal" id="addRecordModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>新增就医记录</h2>
+            <form id="recordForm">
+                <div class="form-group">
+                    <label for="hospital">医院名称:</label>
+                    <input type="text" id="hospital" name="hospital" required>
+                </div>
+                <div class="form-group">
+                    <label for="department">科室:</label>
+                    <input type="text" id="department" name="department" required>
+                </div>
+                <div class="form-group">
+                    <label for="doctor">医生:</label>
+                    <input type="text" id="doctor" name="doctor" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">就诊日期:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="time">就诊时间:</label>
+                    <input type="time" id="time" name="time" required>
+                </div>
+                <div class="form-group">
+                    <label for="diagnosis">诊断结果:</label>
+                    <textarea id="diagnosis" name="diagnosis"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="status">状态:</label>
+                    <select id="status" name="status" required>
+                        <option value="pending">预约中</option>
+                        <option value="completed">已就诊</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">保存记录</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
