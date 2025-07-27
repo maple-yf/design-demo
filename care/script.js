@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 绑定事件
     bindEvents();
+    
+    // 添加底部导航
+    addBottomNavigation();
 });
 
 // 初始化数据
@@ -159,15 +162,110 @@ function renderRecords(records, filter = 'all') {
     });
 }
 
+// 添加底部导航
+function addBottomNavigation() {
+    const bottomNav = document.createElement('div');
+    bottomNav.className = 'bottom-navigation';
+    bottomNav.innerHTML = `
+        <div class="nav-item active" data-page="home">
+            <span class="icon">🏠</span>
+            <span class="label">首页</span>
+        </div>
+        <div class="nav-item" data-page="add">
+            <span class="icon">➕</span>
+            <span class="label">添加</span>
+        </div>
+        <div class="nav-item" data-page="settings">
+            <span class="icon">⚙️</span>
+            <span class="label">设置</span>
+        </div>
+    `;
+    
+    document.body.appendChild(bottomNav);
+    
+    // 添加底部导航样式
+    const style = document.createElement('style');
+    style.textContent = `
+        .bottom-navigation {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 60px;
+            background-color: #fff;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            height: 100%;
+            cursor: pointer;
+            color: #999;
+            text-align: center;
+        }
+        
+        .nav-item.active {
+            color: #4a90e2;
+        }
+        
+        .nav-item .icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+            line-height: 1;
+        }
+        
+        .nav-item .label {
+            font-size: 12px;
+            line-height: 1;
+        }
+        
+        .main-content {
+            padding-bottom: 60px;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // 绑定底部导航点击事件
+    bottomNav.addEventListener('click', function(e) {
+        const navItem = e.target.closest('.nav-item');
+        if (navItem) {
+            // 更新激活状态
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            navItem.classList.add('active');
+            
+            // 处理不同页面点击事件
+            const page = navItem.dataset.page;
+            switch(page) {
+                case 'home':
+                    // 首页逻辑（默认页面，无需特殊处理）
+                    break;
+                case 'add':
+                    // 显示新增记录模态框
+                    document.getElementById('addRecordModal').style.display = 'block';
+                    document.getElementById('recordForm').reset();
+                    break;
+                case 'settings':
+                    // 显示设置提示
+                    alert('设置功能待开发');
+                    break;
+            }
+        }
+    });
+}
+
 // 绑定事件
 function bindEvents() {
-    // 新增记录按钮
-    const addRecordBtn = document.querySelector('.add-record-btn');
-    addRecordBtn.addEventListener('click', function() {
-        document.getElementById('addRecordModal').style.display = 'block';
-        // 清空表单
-        document.getElementById('recordForm').reset();
-    });
+    // 移除了顶部新增记录按钮的事件绑定
     
     // 关闭模态框
     const closeBtn = document.querySelector('.close');
@@ -234,9 +332,5 @@ function bindEvents() {
         alert('记录添加成功！');
     });
     
-    // 设置按钮
-    const settingsBtn = document.querySelector('.settings-btn');
-    settingsBtn.addEventListener('click', function() {
-        alert('设置功能待开发');
-    });
+    // 移除了顶部设置按钮的事件绑定
 }
